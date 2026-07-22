@@ -1,13 +1,18 @@
-import { useState } from "react";
-import { QuickSort } from "./algorithims/quicksort";
+import { useEffect, useState } from "react";
+import { quickSort } from "./algorithims/quicksort";
+import { bubbleSort } from "./algorithims/bubblesort";
 
 const App = () => {
   const [array, setArray] = useState<number[]>([]);
 
-  const [lenght, setLenght] = useState<number>(1);
+  const [lenght, setLenght] = useState<number>(100);
   const [from, setFrom] = useState<number>(0);
-  const [to, setTo] = useState<number>(100);
+  const [to, setTo] = useState<number>(1000);
   const [duration, setDuration] = useState<number>();
+  const [inOrder, setInOrder] = useState<boolean>();
+  useEffect(() => {
+    GenerateArray();
+  }, []);
 
   function getRandomInt(min: number, max: number) {
     const minCeiled = Math.ceil(min);
@@ -20,9 +25,23 @@ const App = () => {
       return;
     }
 
+    const newArray: number[] = [];
     for (let i = 0; i < lenght; i++) {
-      setArray((prev) => [...prev, getRandomInt(from, to + 1)]);
+      newArray.push(getRandomInt(from, to + 1));
     }
+    setArray(newArray);
+    setInOrder(false);
+  }
+
+  function CheckArray(): void {
+    for (let i = 0; i < array.length - 1; i++) {
+      if (array[i] > array[i + 1]) {
+        setInOrder(false);
+        return;
+      }
+    }
+
+    setInOrder(true);
   }
 
   return (
@@ -75,12 +94,21 @@ const App = () => {
             <div className="text-lg">{num}</div>
           ))}
         </div>
-        {duration !== undefined && <p>Sorted in {duration.toFixed(3)} ms</p>}
-
+        <div className="flex gap-3 items-center">
+          {duration !== undefined && <p>Sorted in {duration.toFixed(3)} ms</p>}
+          <button
+            className="bg-green-950 rounded-lg py-2 px-4 hover:bg-green-700 hover:scale-105 transition-all duration-150"
+            onClick={CheckArray}
+          >
+            Check array
+          </button>
+          {inOrder !== undefined &&
+            (inOrder ? <div>Sorted</div> : <div>Not sorted</div>)}
+        </div>
         <button
           onClick={() => {
             const start = performance.now();
-            const sorted = QuickSort(array);
+            const sorted = quickSort(array);
             const end = performance.now();
             setDuration(end - start);
             setArray(sorted);
@@ -88,6 +116,18 @@ const App = () => {
           className="border-2 border-black rounded-2xl p-2 text-xl hover:bg-gray-300 transition-all duration-150 hover:scale-105"
         >
           Quick Sort
+        </button>
+        <button
+          onClick={() => {
+            const start = performance.now();
+            const sorted = bubbleSort(array);
+            const end = performance.now();
+            setDuration(end - start);
+            setArray(sorted);
+          }}
+          className="border-2 border-black rounded-2xl p-2 text-xl hover:bg-gray-300 transition-all duration-150 hover:scale-105"
+        >
+          Bubble Sort
         </button>
       </div>
     </main>

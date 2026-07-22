@@ -1,4 +1,4 @@
-export function QuickSort(upperArray: number[]): number[] {
+export function quickSort(upperArray: number[]): number[] {
   let array = [...upperArray];
 
   recursiveSort(array, 0, array.length - 1);
