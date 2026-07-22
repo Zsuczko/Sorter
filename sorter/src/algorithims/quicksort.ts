@@ -23,7 +23,7 @@ function recursiveSort(array: number[], start: number, end: number) {
 
   swap(array, pivotIndex, i + 1);
 
-  recursiveSort(array, 0, i);
+  recursiveSort(array, start, i);
   recursiveSort(array, i + 2, end);
 }
 
