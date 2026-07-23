@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { quickSort } from "./algorithims/quicksort";
 import { bubbleSort } from "./algorithims/bubblesort";
+import { insertionSort } from "./algorithims/insertionsort";
+import { selectionSort } from "./algorithims/selectionsort";
 
 const App = () => {
   const [array, setArray] = useState<number[]>([]);
@@ -105,30 +107,56 @@ const App = () => {
           {inOrder !== undefined &&
             (inOrder ? <div>Sorted</div> : <div>Not sorted</div>)}
         </div>
-        <button
-          onClick={() => {
-            const start = performance.now();
-            const sorted = quickSort(array);
-            const end = performance.now();
-            setDuration(end - start);
-            setArray(sorted);
-          }}
-          className="border-2 border-black rounded-2xl p-2 text-xl hover:bg-gray-300 transition-all duration-150 hover:scale-105"
-        >
-          Quick Sort
-        </button>
-        <button
-          onClick={() => {
-            const start = performance.now();
-            const sorted = bubbleSort(array);
-            const end = performance.now();
-            setDuration(end - start);
-            setArray(sorted);
-          }}
-          className="border-2 border-black rounded-2xl p-2 text-xl hover:bg-gray-300 transition-all duration-150 hover:scale-105"
-        >
-          Bubble Sort
-        </button>
+        <div className="grid grid-cols-3 gap-5">
+          <button
+            onClick={() => {
+              const start = performance.now();
+              const sorted = quickSort(array);
+              const end = performance.now();
+              setDuration(end - start);
+              setArray(sorted);
+            }}
+            className="border-2 border-black rounded-2xl p-2 text-xl hover:bg-gray-300 transition-all duration-150 hover:scale-105"
+          >
+            Quick Sort
+          </button>
+          <button
+            onClick={() => {
+              const start = performance.now();
+              const sorted = bubbleSort(array);
+              const end = performance.now();
+              setDuration(end - start);
+              setArray(sorted);
+            }}
+            className="border-2 border-black rounded-2xl p-2 text-xl hover:bg-gray-300 transition-all duration-150 hover:scale-105"
+          >
+            Bubble Sort
+          </button>
+          <button
+            onClick={() => {
+              const start = performance.now();
+              const sorted = insertionSort(array);
+              const end = performance.now();
+              setDuration(end - start);
+              setArray(sorted);
+            }}
+            className="border-2 border-black rounded-2xl p-2 text-xl hover:bg-gray-300 transition-all duration-150 hover:scale-105"
+          >
+            Insertion Sort
+          </button>
+          <button
+            onClick={() => {
+              const start = performance.now();
+              const sorted = selectionSort(array);
+              const end = performance.now();
+              setDuration(end - start);
+              setArray(sorted);
+            }}
+            className="border-2 border-black rounded-2xl p-2 text-xl hover:bg-gray-300 transition-all duration-150 hover:scale-105"
+          >
+            Selection Sort
+          </button>
+        </div>
       </div>
     </main>
   );
